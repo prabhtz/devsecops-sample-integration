@@ -1,0 +1,11 @@
+{
+  "name": "devsecops-node-app",
+  "version": "1.0.0",
+  "description": "Simple Node.js app for DevSecOps CI/CD",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node test/app.test.js"
+  },
+  "license": "MIT"
+}

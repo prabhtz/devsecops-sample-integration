@@ -2,9 +2,6 @@ data "aws_vpc" "default" {
   default = true
 }
 
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-
 resource "aws_security_group" "devsecops_sg" {
   name        = "devsecops-demo-sg"
   description = "Allow SSH and app traffic"

@@ -1,0 +1,46 @@
+name: Deploy Node.js App to EC2 with PM2 (Node 20)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Deploy and Start App on EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            # Install Node.js v20 (Amazon Linux 2)
+            curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
+            sudo yum install -y nodejs
+
+            # Install PM2 globally
+            sudo npm install -g pm2
+
+            # Create app directory
+            mkdir -p ~/devsecops-node-app
+            cd ~/devsecops-node-app
+
+            # Stop and delete existing PM2 process
+            pm2 delete app || true
+
+            # Pull latest code and install dependencies
+            rm -rf *
+            git clone https://github.com/${{ github.repository }} .
+            npm install
+
+            # Start the app using PM2
+            pm2 start index.js --name app
+
+            # Save PM2 process for restart on reboot
+            pm2 save

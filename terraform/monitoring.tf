@@ -10,7 +10,7 @@ resource "aws_security_group" "monitoring_sg" {
     to_port     = 9090
     protocol    = "tcp"
     # tfsec:ignore:aws-ec2-no-public-ingress-sgr
-    cidr_blocks = "0.0.0.0/0"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -19,7 +19,7 @@ resource "aws_security_group" "monitoring_sg" {
     to_port     = 3000
     protocol    = "tcp"
     # tfsec:ignore:aws-ec2-no-public-ingress-sgr
-    cidr_blocks = "0.0.0.0/0"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -28,7 +28,7 @@ resource "aws_security_group" "monitoring_sg" {
     to_port     = 22
     protocol    = "tcp"
     # tfsec:ignore:aws-ec2-no-public-ingress-sgr
-    cidr_blocks = "0.0.0.0/0"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {

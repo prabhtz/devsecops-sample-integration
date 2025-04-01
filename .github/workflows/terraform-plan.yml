@@ -27,9 +27,11 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+        working-directory: terraform
 
       - name: Terraform Validate
         run: terraform validate
+        working-directory: terraform
 
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v4
@@ -40,13 +42,15 @@ jobs:
         run: |
           tflint --init
           tflint
+        working-directory: terraform
 
       - name: Run tfsec
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
           version: latest
           soft_fail_commenter: true
-          working_directory: "."
+          working_directory: "terraform"
 
       - name: Terraform Plan
         run: terraform plan -no-color
+        working-directory: terraform

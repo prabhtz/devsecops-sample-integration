@@ -1,0 +1,26 @@
+version: 2
+
+updates:
+  # npm dependencies in package.json / package-lock.json
+  - package-ecosystem: "npm"
+    directory:
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "deps"
+
+  # GitHub Actions workflows (e.g., checkout@v3, setup-node@v3)
+  - package-ecosystem: "github-actions"
+    directory: "/""
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+
+  # Dockerfile base image updates (e.g., FROM node:20)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "docker"

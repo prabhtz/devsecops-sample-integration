@@ -24,29 +24,29 @@ jobs:
             curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
             sudo yum install -y nodejs
 
-            # Install Git (missing in your current image)
+            # Install Git (if not already present)
             sudo yum install -y git
 
             # Install PM2 globally
             sudo npm install -g pm2
 
-            # Create app directory
-            mkdir -p ~/devsecops-sample-integration
-            cd ~/devsecops-sample-integration
+            # Remove any previous app directory
+            rm -rf ~/devsecops-node-app
 
-            # Stop and delete existing PM2 process
-            pm2 delete app || true
+            # Clone latest version from GitHub
+            git clone https://github.com/prabhtz/devsecops-sample-integration.git ~/devsecops-node-app
 
-            # Pull latest code and install dependencies
-            rm -rf *
-            git clone https://github.com/${{ github.repository }} .
-            echo "Cloned repository: ${{ github.repository }}"
-            echo "Current directory: $(pwd)"
-            cd src
+            # Navigate into project
+            cd ~/devsecops-node-app
+
+            # Install Node dependencies
             npm install
+
+            # Stop old PM2 app if it exists
+            pm2 delete app || true
 
             # Start the app using PM2
             pm2 start index.js --name app
 
-            # Save PM2 process for restart on reboot
+            # Save PM2 process list for auto-restart
             pm2 save

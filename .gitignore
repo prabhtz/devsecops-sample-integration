@@ -134,3 +134,29 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+# Terraform
+# Local .terraform directories
+.terraform/*
+# Ignore all terraform plan files
+*.tfplan
+# Ignore all terraform apply files
+*.tfstate
+# Ignore all terraform workspace files
+.terraform.tfstate
+# Ignore all terraform workspace backup files
+.terraform.tfstate.backup
+# Ignore all terraform workspace lock files
+.terraform.lock.hcl
+# Ignore all terraform workspace override files
+override.tf
+override.tf.json
+# Ignore all terraform workspace override files
+override.tf
+override.tf.json
+# Ignore all terraform workspace override files
+override.tf
+override.tf.json
+# Ignore all terraform workspace override files
+override.tf 

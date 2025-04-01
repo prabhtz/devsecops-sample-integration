@@ -1,15 +1,15 @@
 version: 2
 
 updates:
-  # npm dependencies in package.json / package-lock.json
+  # Automatically updates npm dependencies listed in package.json and package-lock.json.
   - package-ecosystem: "npm"
-    directory:
+    directory: "/"
     schedule:
       interval: "weekly"
     commit-message:
       prefix: "deps"
 
-  # GitHub Actions workflows (e.g., checkout@v3, setup-node@v3)
+  # GitHub Actions workflows (e.g., checkout@v3, setup-node@v3) - ensures workflows stay up-to-date with the latest versions.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -17,7 +17,7 @@ updates:
     commit-message:
       prefix: "ci"
 
-  # Dockerfile base image updates (e.g., FROM node:20)
+  # Dockerfile base image updates (e.g., FROM node:20) to keep images secure and up-to-date with the latest patches.
   - package-ecosystem: "docker"
     directory: "/"
     schedule:

@@ -24,6 +24,9 @@ jobs:
             curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
             sudo yum install -y nodejs
 
+            # Install Git (missing in your current image)
+            sudo yum install -y git
+
             # Install PM2 globally
             sudo npm install -g pm2
 

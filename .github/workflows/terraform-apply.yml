@@ -1,22 +1,19 @@
-name: Terraform Plan (with Linting and Security)
+name: Terraform Apply (Manual Trigger with Security Checks)
 
 on:
-  pull_request:
-    branches:
-      - main
-      - dev
+  workflow_dispatch:
 
 jobs:
-  terraform-plan:
-    name: Terraform Plan Check
+  terraform-apply:
+    name: Secure Terraform Apply to AWS
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v2
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -48,5 +45,5 @@ jobs:
           soft_fail_commenter: true
           working_directory: "."
 
-      - name: Terraform Plan
-        run: terraform plan -no-color
+      - name: Terraform Apply
+        run: terraform apply -auto-approve

@@ -45,7 +45,7 @@ jobs:
         working-directory: terraform
 
       - name: Run tfsec
-        uses: aquasecurity/tfsec-action@v1.0.0
+        uses: aquasecurity/tfsec-action@v1.0.3
         with:
           version: latest
           soft_fail_commenter: true

@@ -12,7 +12,7 @@ resource "aws_security_group" "devsecops_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["192.168.1.1/24"]
+    cidr_blocks = ["192.168.1.0/24"]
   }
 
   ingress {
@@ -20,7 +20,7 @@ resource "aws_security_group" "devsecops_sg" {
     from_port   = var.app_port
     to_port     = var.app_port
     protocol    = "tcp"
-    cidr_blocks = ["192.168.1.1/24"]
+    cidr_blocks = ["192.168.1.0/24"]
   }
 
   egress {

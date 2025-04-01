@@ -41,7 +41,8 @@ jobs:
             rm -rf *
             git clone https://github.com/${{ github.repository }} .
             echo "Cloned repository: ${{ github.repository }}"
-            cd ${{ github.repository}}/src
+            echo "Current directory: $(pwd)"
+            cd src
             npm install
 
             # Start the app using PM2

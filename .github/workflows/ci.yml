@@ -27,6 +27,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run OWASP Dependency-Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "devsecops-node-app"
+          path: "./"
+          format: "HTML"
+
       - name: Run tests
         run: npm test
 

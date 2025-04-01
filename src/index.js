@@ -8,6 +8,10 @@ const requestHandler = (req, res) => {
   if (parsedUrl.pathname === '/echo' && parsedUrl.query.message) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ echo: parsedUrl.query.message }));
+  }
+  else if (parsedUrl.pathname === '/version') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ version: "1.0.0" }));
   } else {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Hello from DevSecOps Node.js App!');

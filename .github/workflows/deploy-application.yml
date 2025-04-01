@@ -31,8 +31,8 @@ jobs:
             sudo npm install -g pm2
 
             # Create app directory
-            mkdir -p ~/devsecops-node-app
-            cd ~/devsecops-node-app
+            mkdir -p ~/devsecops-sample-integration
+            cd ~/devsecops-sample-integration
 
             # Stop and delete existing PM2 process
             pm2 delete app || true
@@ -40,6 +40,8 @@ jobs:
             # Pull latest code and install dependencies
             rm -rf *
             git clone https://github.com/${{ github.repository }} .
+            echo "Cloned repository: ${{ github.repository }}"
+            cd ${{ github.repository}}/src
             npm install
 
             # Start the app using PM2

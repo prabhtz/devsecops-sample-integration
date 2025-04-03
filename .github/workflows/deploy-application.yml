@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Deploy and Start App on EC2
         uses: appleboy/ssh-action@v1.0.0

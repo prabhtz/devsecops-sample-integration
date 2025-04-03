@@ -32,13 +32,44 @@ jobs:
         with:
           project: "devsecops-node-app"
           path: "./"
-          format: "HTML"
+          format: "HTML, JSON"
+
+      - name: Check for high/critical vulnerabilities
+        id: check_vulns
+        run: |
+          HIGH_COUNT=$(jq '[.dependencies[].vulnerabilities[]? | select(.severity=="HIGH")] | length' reports/dependency-check-report.json)
+          CRITICAL_COUNT=$(jq '[.dependencies[].vulnerabilities[]? | select(.severity=="CRITICAL")] | length' reports/dependency-check-report.json)
+
+          echo "HIGH vulnerabilities: $HIGH_COUNT"
+          echo "CRITICAL vulnerabilities: $CRITICAL_COUNT"
+
+          if [ "$HIGH_COUNT" -gt 0 ] || [ "$CRITICAL_COUNT" -gt 0 ]; then
+            echo "VULN_SUMMARY<<EOF" >> $GITHUB_ENV
+            jq -r '.dependencies[].vulnerabilities[]? | select(.severity=="HIGH" or .severity=="CRITICAL") | "- **\(.severity)** \(.name): \(.description | gsub("[\\n\\r]+"; " "))"' reports/dependency-check-report.json >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            exit 1
+          fi
 
       - name: Upload Test results
         uses: actions/upload-artifact@master
         with:
           name: OWASP Dependency Check Report
-          path: ${{github.workspace}}/reports
+          path: ${{ github.workspace }}/reports
+
+      - name: Comment on PR with vulnerability summary
+        if: failure() && github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **OWASP Dependency-Check Security Report**
+
+            The following **high/critical vulnerabilities** were found:
+
+            ${{ env.VULN_SUMMARY }}
+
+            Please update the vulnerable dependencies and re-run the scan.
 
       - name: Run tests
         run: npm test

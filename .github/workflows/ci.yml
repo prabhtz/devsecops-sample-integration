@@ -32,7 +32,7 @@ jobs:
         with:
           project: "devsecops-node-app"
           path: "./"
-          format: "HTML, JSON"
+          format: "HTML,JSON"
 
       - name: Check for high/critical vulnerabilities
         id: check_vulns

@@ -2,6 +2,11 @@ const http = require('http');
 const url = require('url');
 const port = process.env.PORT || 3000;
 
+const unusedVariable = "This variable is not used anywhere in the code";
+const unusedFunction = () => {
+  console.log("This function is not used anywhere in the code");
+};
+
 const requestHandler = (req, res) => {
   const parsedUrl = url.parse(req.url, true);
 
